@@ -1,6 +1,7 @@
-import { FlatList, Image, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
 import ThemedView from "@/components/ThemedView";
 import ThemedText from "@/components/ThemedText";
+import ThemedCard from "@/components/ThemedCard";
 
 // Тимчасові дані (пізніше замінимо на збережені книги)
 const books = [
@@ -18,26 +19,26 @@ const books = [
     price: 520,
     cover: "https://m.media-amazon.com/images/I/41uPjEenkFL.jpg",
   },
+  {
+    id: "3",
+    title: "Design Patterns",
+    author: "Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides",
+    price: 600,
+    cover: "https://m.media-amazon.com/images/I/81IGFC6oFmL._SY522_.jpg",
+  },
 ];
 
 export default function HomeScreen() {
   return (
     <ThemedView styles={styles.container}>
-      <ThemedText type="title">📚 Моя колекція книг</ThemedText>
+      <ThemedText type="title" style={{ marginBottom: 20 }}>
+        📚 Моя колекція книг
+      </ThemedText>
 
       <FlatList
         data={books}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.card}>
-            <Image source={{ uri: item.cover }} style={styles.cover} />
-            <View style={styles.info}>
-              <ThemedText type="subtitle">{item.title}</ThemedText>
-              <ThemedText>{item.author}</ThemedText>
-              <ThemedText type="numbers">{item.price} ₴</ThemedText>
-            </View>
-          </View>
-        )}
+        renderItem={({ item }) => <ThemedCard item={item} />}
       />
     </ThemedView>
   );
@@ -47,21 +48,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-  },
-  card: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 16,
-    borderRadius: 12,
-    overflow: "hidden",
-  },
-  cover: {
-    width: 60,
-    height: 90,
-    borderRadius: 6,
-    marginRight: 12,
-  },
-  info: {
-    flex: 1,
   },
 });
